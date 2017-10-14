@@ -9,7 +9,8 @@ import {
   Platform,
   StyleSheet,
   Text,
-  View
+  View,
+  StatusBar
 } from 'react-native';
 
 const instructions = Platform.select({
@@ -20,17 +21,36 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component<{}> {
+  constructor() {
+    super()
+    this.state = {
+      backgroundColor: 'white'
+    }
+
+    this.changeColor = this.changeColor.bind(this)
+  }
+
+  changeColor() {
+    this.setState({ backgroundColor: this.state.backgroundColor === 'white' ? 'green' : 'white' })
+  }
   render() {
+    console.log('hello')
     return (
-      <View style={styles.container}>
+      <View style={[styles.container,
+        { backgroundColor: this.state.backgroundColor }
+      ]}>
+        <StatusBar hidden={true} />
         <Text style={styles.welcome}>
-          Welcome to React Native!
+          Welcomes to React Native!
         </Text>
         <Text style={styles.instructions}>
-          To get started, edit App.js
+          To get starteds, edit App.js
         </Text>
         <Text style={styles.instructions}>
           {instructions}
+        </Text>
+        <Text onPress={this.changeColor}>
+          click me to change backgroundColor
         </Text>
       </View>
     );
@@ -42,7 +62,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
   },
   welcome: {
     fontSize: 20,
